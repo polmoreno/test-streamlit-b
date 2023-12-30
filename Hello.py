@@ -1,51 +1,68 @@
-# Copyright (c) Streamlit Inc. (2018-2022) Snowflake Inc. (2022)
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+from urllib.error import URLError
+
+import altair as alt
+import pandas as pd
 
 import streamlit as st
-from streamlit.logger import get_logger
+from streamlit.hello.utils import show_code
 
-LOGGER = get_logger(__name__)
+st.set_page_config(page_title="TEST #1 TFM", page_icon="📊")
+st.markdown("# TEST #1 TFM")
+st.sidebar.header("TEST #1 TFM")
 
 
-def run():
-    st.set_page_config(
-        page_title="Hello",
-        page_icon="👋",
-    )
+def dataset_filtro_func():
+    @st.cache_data
+    def get_UN_data():
+        st.write("#### DATASET FILTRO:")
+        dataset_filtro = pd.read_csv("/workspaces/test-streamlit-b/DATASET_FILTRO.csv")
+        return dataset_filtro.set_index("GeneId")
 
-    st.write("# :balloon: Welcome to Streamlit! 👋")
-
-    st.sidebar.success("Select a demo above.")
-
-    st.markdown(
+    try:
+        dataset_filtro = get_UN_data()
+        geneid = st.multiselect(
+            "Choose GeneID", list(dataset_filtro.index), placeholder="e.g. ENSG00000274059"
+        )
+        if not geneid:
+            st.write(dataset_filtro)
+        else:
+            data = dataset_filtro.loc[geneid]
+            st.write(data.sort_index())
+    except URLError as e:
+        st.error(
+            """
+            **This demo requires internet access.**
+            Connection error: %s
         """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
-        **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
-        ### Want to learn more?
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into our [documentation](https://docs.streamlit.io)
-        - Ask a question in our [community
-          forums](https://discuss.streamlit.io)
-        ### See more complex demos
-        - Use a neural net to [analyze the Udacity Self-driving Car Image
-          Dataset](https://github.com/streamlit/demo-self-driving)
-        - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-    """
-    )
+            % e.reason
+        )
+
+def vcf_filtro_func():
+    @st.cache_data
+    def get_UN_data():
+        st.write("#### VCF FILTRO:")
+        vcf_filtro = pd.read_csv("/workspaces/test-streamlit-b/VCF_FILTRO.csv")
+        return vcf_filtro.set_index("#CHROM")
+
+    try:
+        vcf_filtro = get_UN_data()
+        chrom = st.multiselect(
+            "Choose CHROM", list(vcf_filtro.index), ["chr15", "chr16"]
+        )
+        if not chrom:
+            st.error("Please select at least one CHROM.")
+        else:
+            data = vcf_filtro.loc[chrom]
+            st.write(data.sort_index())
+    except URLError as e:
+        st.error(
+            """
+            **This demo requires internet access.**
+            Connection error: %s
+        """
+            % e.reason
+        )
 
 
-if __name__ == "__main__":
-    run()
+dataset_filtro_func()
+vcf_filtro_func()
