@@ -15,7 +15,7 @@ def dataset_filtro_func():
     @st.cache_data
     def get_UN_data():
         st.write("#### DATASET FILTRO:")
-        dataset_filtro = pd.read_csv("/workspaces/test-streamlit-b/DATASET_FILTRO.csv")
+        dataset_filtro = pd.read_csv("./DATASET_FILTRO.csv")
         return dataset_filtro.set_index("GeneId")
 
     try:
@@ -41,7 +41,7 @@ def vcf_filtro_func():
     @st.cache_data
     def get_UN_data():
         st.write("#### VCF FILTRO:")
-        vcf_filtro = pd.read_csv("/workspaces/test-streamlit-b/VCF_FILTRO.csv")
+        vcf_filtro = pd.read_csv("./VCF_FILTRO.csv")
         return vcf_filtro.set_index("#CHROM")
 
     try:
