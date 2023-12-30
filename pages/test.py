@@ -4,7 +4,7 @@ import numpy as np
 
 st.title('Test 1 TFM')
 
-DATA_URL = '/workspaces/test-streamlit-b/DATASET_FILTRO.csv'
+DATA_URL = './DATASET_FILTRO.csv'
 
 @st.cache_data
 def load_data(nrows):

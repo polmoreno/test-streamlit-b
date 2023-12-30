@@ -6,7 +6,7 @@ import pandas as pd
 import streamlit as st
 from streamlit.hello.utils import show_code
 
-st.set_page_config(page_title="TEST #1 TFM", page_icon="📊")
+st.set_page_config(page_title="TEST #1 TFM")
 st.markdown("# TEST #1 TFM")
 st.sidebar.header("TEST #1 TFM")
 
@@ -62,7 +62,6 @@ def vcf_filtro_func():
         """
             % e.reason
         )
-
 
 dataset_filtro_func()
 vcf_filtro_func()
