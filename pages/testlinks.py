@@ -7,32 +7,6 @@ st.set_page_config(page_title="TEST #1 TFM")
 st.markdown("# TEST #1 TFM")
 st.sidebar.header("TEST #1 TFM")
 
-def vcf_filtro_func():
-    @st.cache_data
-    def get_UN_data():
-        st.write("#### VCF FILTRO:")
-        vcf_filtro = pd.read_csv("./VCF_FILTRO.csv")
-        return vcf_filtro.set_index("#CHROM")
-
-    try:
-        vcf_filtro = get_UN_data()
-        chrom = st.multiselect(
-            "Choose CHROM", list(vcf_filtro.index), placeholder="e.g. chr15"
-        )
-        if not chrom:
-            st.write(vcf_filtro)
-        else:
-            data = vcf_filtro.loc[chrom]
-            st.write(data.sort_index())
-    except URLError as e:
-        st.error(
-            """
-            **This demo requires internet access.**
-            Connection error: %s
-        """
-            % e.reason
-        )
-
 def dataset_filtro_func():
     @st.cache_data
     def get_UN_data():
@@ -61,6 +35,8 @@ def dataset_filtro_func():
             % e.reason
         )
 
-
-vcf_filtro_func()
 dataset_filtro_func()
+
+#selected_reward = st.selectbox("Choose a reward", df.Item, 0)
+#selected_reward_price = df.loc[df.Item == selected_reward]["Price (Coins)"].iloc[0]
+#st.write(f'Price: {selected_reward_price}')
