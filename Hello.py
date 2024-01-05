@@ -17,7 +17,7 @@ def vcf_filtro_func():
     try:
         vcf_filtro = get_UN_data()
         chrom = st.multiselect(
-            "Choose CHROM", list(vcf_filtro.index), placeholder="e.g. chr15"
+            "Choose CHROM", list(vcf_filtro.index.unique()), placeholder="e.g. chr15"
         )
         if not chrom:
             st.write(vcf_filtro)
@@ -39,19 +39,32 @@ def dataset_filtro_func():
         st.write("#### DATASET FILTRO:")
         dataset_filtro = pd.read_csv("./DATASET_FILTRO.csv")
         return dataset_filtro.set_index("#GeneName")
-
     try:
         dataset_filtro = get_UN_data()
         geneName = st.multiselect(
-            "Choose GeneName", list(dataset_filtro.index), placeholder="e.g. A2M"
+            "Choose GeneName", list(dataset_filtro.index.unique()), placeholder="e.g. A2M"
+        )
+        bioType = st.multiselect(
+            "Choose BioType", list(dataset_filtro["BioType"].unique()), placeholder="e.g. rRNA"
+        )
+        low = st.multiselect(
+            "Choose LOW", list(dataset_filtro["LOW"].unique()), placeholder="e.g. 1"
         )
         if not geneName:
             st.write(dataset_filtro)
         else:
             data = dataset_filtro.loc[geneName]
-            st.write(data.sort_index())
-            geneId= data["GeneId"].iloc[0]
-            st.link_button("See on Ensembl", f"https://www.ensembl.org/Multi/Search/Results?q={geneId}")
+            if bioType and low:
+                bioData = data.loc[data["BioType"].isin(bioType)]
+                st.write(bioData.loc[bioData["LOW"].isin(low)])
+            elif bioType:
+                st.write(data.loc[data["BioType"].isin(bioType)])
+            elif low:
+                st.write(data.loc[data["LOW"].isin(low)])
+            else:    
+                st.write(data.sort_index())
+                geneId= data["GeneId"].iloc[0]
+                st.link_button("See on Ensembl", f"https://www.ensembl.org/Multi/Search/Results?q={geneId}")
     except URLError as e:
         st.error(
             """
@@ -60,7 +73,6 @@ def dataset_filtro_func():
         """
             % e.reason
         )
-
 
 vcf_filtro_func()
 dataset_filtro_func()
