@@ -24,8 +24,18 @@ def dataset_filtro_func():
         low = st.multiselect(
             "Choose LOW", list(dataset_filtro["LOW"].unique()), placeholder="e.g. 1"
         )
-        if not geneName:
+        if not geneName and not bioType and not low:
             st.write(dataset_filtro)
+        elif bioType and low:
+            bioData = dataset_filtro.loc[dataset_filtro["BioType"].isin(bioType)]
+            data = bioData.loc[bioData["LOW"].isin(low)]
+            st.write(data)
+        elif bioType:
+            data = dataset_filtro.loc[dataset_filtro["BioType"].isin(bioType)]
+            st.write(data)
+        elif low:
+            data = dataset_filtro.loc[dataset_filtro["LOW"].isin(low)]
+            st.write(data)
         else:
             data = dataset_filtro.loc[geneName]
             if bioType and low:
