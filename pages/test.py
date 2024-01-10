@@ -46,17 +46,59 @@ import numpy as np
 #with col3:
 #    st.button('3')
 
+#def get_UN_data():
+#        st.write("#### DATASET FILTRO:")
+#        dataset_filtro = pd.read_csv("./DATA_VCF.csv")
+#        return dataset_filtro.set_index("#GeneName")
+#df = get_UN_data()
+#
+##columns = st.multiselect("Columns:",df.columns)
+##st.button("HIGH")
+#
+#columns = ["LOW", "MODERATE", "MODIFIER"]
+#
+## filter = st.radio("Choose by:", ("inclusion","exclusion"))
+#
+#if st.button("HIGH"):
+#    columns = [col for col in df.columns if col not in columns]
+#    df[columns]
+#else:
+#    st.write(df)
 
-def get_UN_data():
-        st.write("#### DATASET FILTRO:")
-        dataset_filtro = pd.read_csv("./DATA_VCF.csv")
-        return dataset_filtro.set_index("#GeneName")
-df = get_UN_data()
 
-columns = st.multiselect("Columns:",df.columns)
-filter = st.radio("Choose by:", ("inclusion","exclusion"))
-
-if filter == "exclusion":
-    columns = [col for col in df.columns if col not in columns]
-
-df[columns]
+#st.data_editor(
+#    pd.DataFrame(
+#        {
+#            "col_0": [
+#                "https://streamlit.io/",
+#                "https://docs.streamlit.io/",
+#                "https://streamlit.io/gallery",
+#                None,
+#            ],
+#            "col_1": [
+#                "https://roadmap.streamlit.app",
+#                "https://extras.streamlit.app",
+#                "https://issues.streamlit.app",
+#                None,
+#            ],
+#            "col_2": [
+#                "https://roadmap.streamlit.app",
+#                "https://extras.streamlit.app",
+#                "https://issues.streamlit.app",
+#                None,
+#            ],
+#        }
+#    ),
+#    column_config={
+#        "col_0": st.column_config.LinkColumn("Link column"),
+#        "col_1": st.column_config.LinkColumn(
+#            "Link with display text",
+#            display_text="Open link",
+#        ),
+#        "col_2": st.column_config.LinkColumn(
+#            "Link with regex extraction",
+#            display_text="^https://(.*?).streamlit.app$",
+#            validate="^https://.*?.streamlit.app$",
+#        ),
+#    },
+#)
