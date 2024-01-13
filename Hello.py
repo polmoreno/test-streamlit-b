@@ -5,8 +5,8 @@ from urllib.error import URLError
 import pandas as pd
 import streamlit as st
 
-# Setting page configuration for the Streamlit app (window title, page title and subheader)
-st.set_page_config(page_title="TFM - Bernat Moreno Batlle")
+# Setting page configuration for the Streamlit app (wide mode, window title, page title and subheader)
+st.set_page_config(page_title="TFM - Bernat Moreno Batlle", layout="wide")
 st.markdown("# DISEÑO E IMPLEMENTACIÓN DE UN PIPELINE BIOINFORMÁTICO PARA ANÁLISIS GENÓMICO EN LA ASOCIACIÓN VACTERL")
 st.subheader('Bernat Moreno Batlle')
 
@@ -74,7 +74,7 @@ def dataset_filtro_func():
                 st.dataframe(
                         bioData[ifhigh],
                         column_config={
-                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="^https://www\.ensembl\.org/Homo_sapiens/Gene/Summary\?db=core;g=(.*?)$")
                         },
                     )
             else:
@@ -83,7 +83,7 @@ def dataset_filtro_func():
                 st.dataframe(
                         data[ifhigh],
                         column_config={
-                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="^https://www\.ensembl\.org/Homo_sapiens/Gene/Summary\?db=core;g=(.*?)$")
                         },
                     )
         elif lowButton:
@@ -96,7 +96,7 @@ def dataset_filtro_func():
                 st.dataframe(
                         bioData[iflow],
                         column_config={
-                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="^https://www\.ensembl\.org/Homo_sapiens/Gene/Summary\?db=core;g=(.*?)$")
                         },
                     )
             else:
@@ -105,7 +105,7 @@ def dataset_filtro_func():
                 st.dataframe(
                         data[iflow],
                         column_config={
-                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="^https://www\.ensembl\.org/Homo_sapiens/Gene/Summary\?db=core;g=(.*?)$")
                         },
                     )
         elif moderateButton:
@@ -118,7 +118,7 @@ def dataset_filtro_func():
                 st.dataframe(
                         bioData[ifmoderate],
                         column_config={
-                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="^https://www\.ensembl\.org/Homo_sapiens/Gene/Summary\?db=core;g=(.*?)$")
                         },
                     )
             else:
@@ -127,7 +127,7 @@ def dataset_filtro_func():
                 st.dataframe(
                         data[ifmoderate],
                         column_config={
-                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="^https://www\.ensembl\.org/Homo_sapiens/Gene/Summary\?db=core;g=(.*?)$")
                         },
                     )
         elif modifierButton:
@@ -140,7 +140,7 @@ def dataset_filtro_func():
                 st.dataframe(
                         bioData[ifmodifier],
                         column_config={
-                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="^https://www\.ensembl\.org/Homo_sapiens/Gene/Summary\?db=core;g=(.*?)$")
                         },
                     )
             else:
@@ -149,7 +149,7 @@ def dataset_filtro_func():
                 st.dataframe(
                         data[ifmodifier],
                         column_config={
-                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="^https://www\.ensembl\.org/Homo_sapiens/Gene/Summary\?db=core;g=(.*?)$")
                         },
                     )
         else:
@@ -158,7 +158,7 @@ def dataset_filtro_func():
                 st.dataframe(
                     dataset_filtro,
                     column_config={
-                    "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                    "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="^https://www\.ensembl\.org/Homo_sapiens/Gene/Summary\?db=core;g=(.*?)$")
                     },
                 )
             elif bioType:
@@ -167,7 +167,7 @@ def dataset_filtro_func():
                 st.dataframe(
                     data,
                     column_config={
-                    "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                    "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="^https://www\.ensembl\.org/Homo_sapiens/Gene/Summary\?db=core;g=(.*?)$")
                     },
                 )
             else:
@@ -179,7 +179,7 @@ def dataset_filtro_func():
                     st.dataframe(
                         data,
                         column_config={
-                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                            "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="^https://www\.ensembl\.org/Homo_sapiens/Gene/Summary\?db=core;g=(.*?)$")
                         },
                     )
     except URLError as e:
@@ -217,7 +217,7 @@ def vcf_filtro_func():
             st.dataframe(
                 vcf_filtro,
                 column_config={
-                    "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                    "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="Ubicación")
                 },
             )
         else:
@@ -226,7 +226,7 @@ def vcf_filtro_func():
             st.dataframe(
                 data,
                 column_config={
-                    "ENSEMBL": st.column_config.LinkColumn("ENSEMBL")
+                    "ENSEMBL": st.column_config.LinkColumn("ENSEMBL", display_text="Ubicación")
                 },
             )
     except URLError as e:
